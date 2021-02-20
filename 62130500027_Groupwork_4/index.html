@@ -44,29 +44,43 @@
 
 
 <body>
-  <div id="app" class=" font-mono font-bold max-w-xl mx-auto my-10 space-y-3">
-    <h1 class="text-xl ml-16 ">Photo Gallery ( {{ countdone }} )</h1>
-    <span :class="{'hidden' : form.search }"><i class="fas fa-search mt-6" @click="search"></i></span>
-    <span :class="{'hidden' : !form.search}">
-      <input class="mt-6 rounded ml-2 w-96 px-2 py-1 border-2 border-black mx-2 placeholder-opacity-50 placeholder-gray-500 focus:outline-none" placeholder="Please enter text for searching photos"
-        v-model="form.text">
-      <button class="mx-2 rouned text-white px-4 py-2 bg-blue-500 " @click="search">Cancle</button>
-    </span>
-    
+  <div id="app" class=" font-mono font-bold ">
+    <div class="max-w-xl mx-auto my-10 space-y-3">
+      <h1 class="text-xl ml-16 ">Photo Gallery ( {{ tasks.filter(t => t.done).length}} )</h1>
+      <span :class="{'hidden' : form.search }"><i class="fas fa-search mt-6" @click="search"></i></span>
+      <span :class="{'hidden' : !form.search}">
+        <input
+          class="mt-6 rounded ml-2 w-96 px-2 py-1 border-2 border-black mx-2 placeholder-opacity-50 placeholder-gray-500 focus:outline-none"
+          placeholder="Please enter text for searching photos" v-model="form.text">
+        <button class="mx-2 rounded text-white px-4 py-2 bg-blue-500 " @click="search">Cancel</button>
+      </span>
+
       <ul>
-        
-        <li class="flex m-5 place-self-center" v-for="(task,index) in searching" :class="{done: task.done}" v-if="searching.length !== 0 ">
-          <img v-on:click="toggleDone(index)" :src="task.url" alt="task.alt" class="w-1/2 rounded shadow " />
+
+        <li class="flex m-5 place-self-center" v-for="(task,index) in searching" :class="{done: task.done}"
+          v-if="searching.length !== 0 ">
+          <img @click="toggleView(task)" :src="task.url" alt="task.alt" class="w-1/2 rounded shadow " />
           <p class="place-self-center ml-16 ">{{task.alt}}</p>
-          <p class="place-self-center"><i v-show="task.heart" class="fas fa-heart text-red-600 ml-5"></i></p>
+          <p class="place-self-center"><i v-show="task.heart" class="fas fa-heart text-red-600 ml-5 "></i></p>
+          <i v-show="!task.done "
+            class="text-black transition duration-500 far fa-2x fa-heart hover:text-pink-500 place-self-center ml-10"
+            @click="like(task)"></i>
+          <i v-show="task.done "
+            class="text-pink-500 transition duration-500 fas fa-2x fa-heart place-self-center ml-10"
+            @click="like(task)"></i>
         </li>
         <div v-else class="mt-10 bg-white shadow-lg rounded w-full mx-auto px-auto py-5 flex justify-center">
           <h2 class="mb-2 text-2xl font-bold text-gray-800">No Photos.</h2>
-      </div>
-      
+        </div>
+
       </ul>
-    
-    
+    </div>
+    <div v-show="hasView" class="fixed top-0 flex justify-center w-screen h-screen bg-black ">
+      <div class="h-screen m-6 ">
+        <i class="flex-row-reverse text-white cursor-pointer far fa-2x fa-times-circle" @click="close"></i>
+        <img :src="viewImg" class="m-6 border border-4 border-white h-5/6">
+      </div>
+    </div>
 
   </div>
 
