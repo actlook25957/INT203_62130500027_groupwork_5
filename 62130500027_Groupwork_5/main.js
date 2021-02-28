@@ -1,4 +1,4 @@
-const app = {
+const app = Vue.createApp({
     data() {
         return {
             tasks: [{
@@ -61,6 +61,5 @@ const app = {
             });
         },
     }
-}
+});
 
-Vue.createApp(app).mount('#app')

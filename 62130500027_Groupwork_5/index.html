@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+
+
+<head>
+
+  <meta charset="UTF-8" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Basic Vue Js - HelloWorld App</title>
+
+
+
+  <!-- https://google.github.io/material-design-icons/#icon-font-for-the-web -->
+
+  <!-- Using via Google Web Fonts -->
+
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+
+
+
+  <!-- https://tailwindcss.com/docs/installation -->
+
+  <!-- Using Tailwind via CDN -->
+
+  <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet" />
+
+
+
+  <!-- https://v3.vuejs.org/guide/installation.html#release-notes -->
+
+  <!-- Vue CDN -->
+
+  <script src="https://unpkg.com/vue@next"></script>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+
+
+
+</head>
+
+
+
+<body>
+  <div id="app" class=" font-mono font-bold ">
+    <div class="max-w-xl mx-auto my-10 space-y-3">
+      <h1 class="text-xl ml-16 ">Photo Gallery ( {{ tasks.filter(t => t.done).length}} )</h1>
+      <photo-search :form="form"></photo-search>
+      <div v-for="tasks in searching" v-if="searching.length !== 0" >
+        <photo-items :task ="tasks" @when-like="like" @when-toggleview="toggleView"></photo-items>
+    </div>
+
+      <div v-else class="mt-10 bg-white shadow-lg rounded w-full mx-auto px-auto py-5 flex justify-center">
+        <h2 class="mb-2 text-2xl font-bold text-gray-800">No Photos.</h2>
+      </div>
+
+    </div>
+    <photo-views :img="viewImg" :view="hasView" @when-close="close"></photo-views>
+    
+  </div>
+
+
+  <!-- my main.js -->
+  <script src="./main.js"></script>
+    <script src="components/PhotoSearch.js"></script>
+    <script src="components/PhotoItem.js"></script>
+    <script src="components/PhotoView.js"></script>
+    <script>
+        app.mount('#app')
+    </script>
+
+ 
+
+</body>
+
+
+
+</html>
